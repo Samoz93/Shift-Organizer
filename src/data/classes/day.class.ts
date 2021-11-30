@@ -54,17 +54,6 @@ export class DayModel {
     shiftType: SHIFT_TYPES = SHIFT_TYPES.NightShift
   ): User => {
     // check that we passed an accepted shiftType if it is the weekend
-    if (
-      !this.isWeekDay &&
-      service === SERVICE.ER &&
-      shiftType === SHIFT_TYPES.NightShift
-    )
-      throw Error(`its weekend we can only accept znf or zns`);
-
-    // if it the weekday accept only the fullshift
-    if (this.isWeekDay && shiftType !== SHIFT_TYPES.NightShift) {
-      shiftType = SHIFT_TYPES.NightShift;
-    }
 
     const shift: SHIFT = {
       user,

@@ -95,29 +95,35 @@ export class User {
     return this.getShiftsCounts(isWeekDay) >= max;
   }
 
-  hasShiftInRow(day: DayModel, shiftCount = 4): boolean {
+  hasShiftInRow(day: DayModel): boolean {
     // Check if 4 in a rows;
-    const prevDateIDS = _.range(1, shiftCount + 3).map((f) =>
-      day.getPreviousDateIDS(f)
-    );
+    const prevDateIDS = _.range(1, 5).map((f) => day.getPreviousDateIDS(f));
 
     const shiftIDS = this.shifts.map((f) => f.dateId);
-    const hasFourInARow = _.every(prevDateIDS, (prevId) =>
-      shiftIDS.includes(prevId)
-    );
+    const hasFourInARow =
+      _.reduce(
+        prevDateIDS,
+        (pr, prevId) => {
+          return shiftIDS.includes(prevId) ? pr + 1 : pr;
+        },
+        0
+      ) >= 4;
 
     return hasFourInARow;
+  }
+
+  wasPreviousAWE = (day: DayModel, shiftCount = 4): boolean => {
+    const shiftIDS = this.shifts.map((f) => f.dateId);
 
     // Check if previous day is weekend and has a shift there
-    // const isPrevDayWeekDay = day.isPreviousDayWeekDay();
-    // const prevDayId = day.getPreviousDateIDS(1);
+    const isPrevDayWeekDay = day.isPreviousDayWeekDay();
+    const prevDayId = day.getPreviousDateIDS(1);
 
-    // // If he has a shift in the prev day and the prev is a weekend return true
-    // return isPrevDayWeekDay
-    //   ? false
-    //   : shiftIDS.filter((f) => f === prevDayId).length > 0 &&
-    //       this.service === SERVICE.IMC;
-  }
+    // If he has a shift in the prev day and the prev is a weekend return true
+    return isPrevDayWeekDay
+      ? false
+      : shiftIDS.filter((f) => f === prevDayId).length > 0;
+  };
 
   private getShiftsCounts = (isWeekDay = true) => {
     return this.getShifts(isWeekDay).length;

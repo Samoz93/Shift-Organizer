@@ -25,6 +25,7 @@
     "@tsconfig/svelte": "^2.0.0"
   },
   "dependencies": {
+    "@types/lodash": "^4.14.177",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "sirv-cli": "^1.0.0"

@@ -23,7 +23,7 @@
     }, 0);
 
     MaxWDShifts = f.days.filter((f) => f.isWeekDay).length * 2;
-    MaxWEShifts = f.days.filter((f) => !f.isWeekDay).length * 3;
+    MaxWEShifts = f.days.filter((f) => !f.isWeekDay).length * 5;
   });
 
   const test = () => {
@@ -51,29 +51,14 @@
         );
       }
 
-      //   if (erUsers.length > 0) {
-      //     if (day.isWeekDay) {
-      //       addShiftToADay(
-      //         day.id,
-      //         SERVICE.ER,
-      //         SHIFT_TYPES.NightShift,
-      //         currentErUser
-      //       );
-      //     } else {
-      //       addShiftToADay(
-      //         day.id,
-      //         SERVICE.ER,
-      //         SHIFT_TYPES.EarlyShift,
-      //         currentErUser
-      //       );
-      //       addShiftToADay(
-      //         day.id,
-      //         SERVICE.ER,
-      //         SHIFT_TYPES.LateShift,
-      //         currentErUser2
-      //       );
-      //     }
-      //   }
+      if (erUsers.length > 0) {
+        addShiftToADay(
+          day.id,
+          SERVICE.ER,
+          SHIFT_TYPES.NightShift,
+          currentErUser
+        );
+      }
     });
   };
 
